@@ -83,6 +83,11 @@
   .host-row { display: grid; grid-template-columns: 56px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
   .host-row time { font-variant-numeric: tabular-nums; color: var(--gold); font-weight: 500; }
   .host-row .c { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .pin { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pin input { flex: 1; min-width: 140px; background: var(--panel); border: 1px solid var(--line); color: var(--ink); font: 500 22px var(--sans); letter-spacing: .4em; padding: 12px 14px; }
+  .pin .btn { margin-top: 0; }
+  .pin-err { color: #ff9a88; margin: 10px 0 0; }
   footer { text-align: center; margin-top: 40px; font-family: var(--script); font-size: 30px; color: var(--gold); }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
@@ -101,6 +106,7 @@
     <button role="tab" data-tab="menu" aria-selected="false">Menu</button>
     <button role="tab" data-tab="drinks" aria-selected="false">Drinks</button>
     <button role="tab" data-tab="games" aria-selected="false">Games</button>
+    <button role="tab" data-tab="host" aria-selected="false">Host</button>
   </nav>
 
   <section id="day">
@@ -145,11 +151,21 @@
   </section>
 
   <section id="host" hidden>
-    <div class="host-banner">Host view: kitchen run sheet</div>
-    <h2>Christmas Day, minute by minute</h2>
-    <div id="hostBody"></div>
-    <h2>Probe targets</h2>
-    <div class="card"><p>Crowns off at 155°F, rest, carve. Ballotine 167°F at 40 minutes. Red cabbage 167°F. Gravy at the boil. Gammon 167°F. Times are guides; cook to temperature.</p></div>
+    <div id="hostLock">
+      <h2>Host</h2>
+      <p class="lede">The kitchen run sheet. Enter the host PIN to open it.</p>
+      <form id="pinForm" class="pin">
+        <label for="pin" class="sr">PIN</label>
+        <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="PIN">
+        <button class="btn" type="submit">Unlock</button>
+      </form>
+      <p class="pin-err" id="pinErr" role="alert" hidden>That PIN did not work. Try again.</p>
+    </div>
+    <div id="hostOpen" hidden>
+      <div class="host-banner">Host view: kitchen run sheet</div>
+      <div id="hostBody"></div>
+      <button class="btn" id="hostLockBtn" type="button">Lock</button>
+    </div>
   </section>
 
   <footer>Merry Christmas</footer>
@@ -196,17 +212,7 @@
     ["17:30", "Rest and play", "Games, a walk, presents. The gammon goes in the oven."],
     ["19:00", "Evening spread", "Gammon, cheese, pork pie and sausage rolls."]
   ];
-  var HOST = [
-    ["10:30", "main", "Light the Weber (spit on about 30 minutes later)"], ["11:30", "canapé", "Blinis out of the freezer"],
-    ["11:45", "canapé", "Slice the beef"], ["12:00", "canapé", "Warm blinis and Yorkshires in the air fryer"],
-    ["12:15", "canapé", "Assemble the canapés"], ["12:30", "canapé", "Guests arrive; canapés, sablés and crisps out"],
-    ["12:45", "sides", "Red cabbage to 167°F on the hob, then into the slow cooker"], ["13:00", "starter", "Slice and plate the terrine; back into the fridge"],
-    ["13:30", "main", "Warm the gravy base; cut the apple for the sprouts; cranberry sauce out"], ["13:45", "main", "Crowns off at 155°F to rest (about now)"],
-    ["13:58", "starter", "Dill oil and dill on the starter plates"], ["14:00", "starter", "Starter on the table"],
-    ["14:30", "main", "Carve the crowns"], ["14:40", "sides", "Sprouts, bread sauce and gravy finished; main on the table (about now)"],
-    ["Dessert", "dessert", "Torch and flame the Alaskas; microwave the pudding and custard"], ["17:30", "evening", "Gammon into the oven"],
-    ["18:20", "evening", "Sausage rolls in from frozen"], ["19:00", "evening", "Evening spread: gammon, cheeses, pork pie, chutney, sausage rolls"]
-  ];
+  var VAULT = {"s":"FAbExw3hyiRep06S63mAfg==","i":"yqg1q5UKuxVAXtVu","c":"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"};
   var JOKES = ["What do you call a snowman with a six-pack? An abdominal snowman.", "Why did nobody bring the turkey a present? It already had enough stuffing.",
     "What do elves learn at school? The elf-abet.", "What is a sprout's favourite music? Brussels rap.", "Why was the Christmas pudding so calm? It had been well soaked.",
     "What do you get if you cross a turkey with a ghost? A poultry-geist."];
@@ -269,8 +275,31 @@
   $("jokeBtn").addEventListener("click", function () { ji++; joke(); });
   $("quiz").innerHTML = QUIZ.map(function (q, i) { return '<details><summary>' + (i + 1) + '. ' + q[0] + '</summary><p class="ans">' + q[1] + '</p></details>'; }).join("");
 
-  // Host
-  $("hostBody").innerHTML = HOST.map(function (r) { return '<div class="host-row"><time>' + r[0] + '</time><div>' + r[2] + '<div class="c">' + r[1] + '</div></div></div>'; }).join("");
+
+  // Host: run sheet is encrypted with the PIN (AES-GCM, PBKDF2), so it is not readable in the page source
+  function unb64(x) { return Uint8Array.from(atob(x), function (c) { return c.charCodeAt(0); }); }
+  function unlock(pin) {
+    var enc = new TextEncoder();
+    return crypto.subtle.importKey("raw", enc.encode(pin), "PBKDF2", false, ["deriveKey"]).then(function (k) {
+      return crypto.subtle.deriveKey({ name: "PBKDF2", salt: unb64(VAULT.s), iterations: 200000, hash: "SHA-256" }, k, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    }).then(function (key) {
+      return crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(VAULT.i) }, key, unb64(VAULT.c));
+    }).then(function (buf) { return new TextDecoder().decode(buf); });
+  }
+  function openHost(html) { $("hostBody").innerHTML = html; $("hostLock").hidden = true; $("hostOpen").hidden = false; }
+  $("pinForm").addEventListener("submit", function (e) {
+    e.preventDefault(); var pin = $("pin").value;
+    if (!window.crypto || !crypto.subtle) { $("pinErr").textContent = "This browser cannot unlock the host view."; $("pinErr").hidden = false; return; }
+    unlock(pin).then(function (html) {
+      $("pinErr").hidden = true; $("pin").value = ""; openHost(html);
+      try { sessionStorage.setItem("xmas-pin", pin); } catch (x) {}
+    }, function () { $("pinErr").textContent = "That PIN did not work. Try again."; $("pinErr").hidden = false; $("pin").select(); });
+  });
+  $("hostLockBtn").addEventListener("click", function () {
+    $("hostBody").innerHTML = ""; $("hostOpen").hidden = true; $("hostLock").hidden = false;
+    try { sessionStorage.removeItem("xmas-pin"); } catch (x) {}
+  });
+  try { var saved = sessionStorage.getItem("xmas-pin"); if (saved && window.crypto && crypto.subtle) unlock(saved).then(openHost, function () {}); } catch (x) {}
 
   // Tabs
   var tabs = ["day", "menu", "drinks", "games", "host"];
