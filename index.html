@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10291f">
+<title>Christmas Day 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Layout: single-column phone app, sticky tab bar, gold-on-bottle-green; one committed dark look */
+  :root {
+    --bg: #10291f; --panel: #17382b; --line: #2f5443; --ink: #f4ecd6; --dim: #b9c4b3;
+    --gold: #d4b36a; --gold-deep: #a2792b; --berry: #c4523f; --ok: #8fc79a;
+    --script: "Pinyon Script", "Snell Roundhand", cursive;
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.5;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 48px; }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  header { text-align: center; padding: 36px 0 18px; }
+  .eyebrow { font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin: 0; font-weight: 500; }
+  h1 { font-family: var(--script); font-weight: 400; font-size: clamp(46px, 14vw, 68px); line-height: 1.05; margin: 6px 0 4px; color: var(--ink); text-wrap: balance; }
+  .sub { font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--dim); margin: 0; }
+  .status { margin: 20px 0 0; padding: 16px; border: 1px solid var(--gold-deep); outline: 1px solid var(--line); outline-offset: 3px; text-align: center; }
+  .status .big { font-family: var(--serif); font-size: 26px; font-weight: 500; margin: 0; line-height: 1.2; }
+  .status .small { margin: 4px 0 0; color: var(--dim); font-size: 14px; }
+  .digits { font-variant-numeric: tabular-nums; color: var(--gold); }
+  nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; gap: 4px; background: var(--bg); padding: 10px 0; border-bottom: 1px solid var(--line); overflow-x: auto; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 10; }
+  nav button { flex: 1; min-width: max-content; background: none; border: 0; color: var(--dim); font: 500 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; padding: 12px 10px; cursor: pointer; border-bottom: 2px solid transparent; }
+  nav button[aria-selected="true"] { color: var(--gold); border-bottom-color: var(--gold); }
+  button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  section[hidden] { display: none; }
+  h2 { font-family: var(--serif); font-weight: 500; font-size: 28px; margin: 28px 0 4px; color: var(--gold); text-wrap: balance; }
+  .lede { color: var(--dim); margin: 0 0 14px; }
+  /* timeline */
+  .tl { list-style: none; margin: 8px 0 0; padding: 0; }
+  .tl li { display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .tl time { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--gold); font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .tl h3 { margin: 0; font-family: var(--serif); font-size: 22px; font-weight: 500; line-height: 1.2; }
+  .tl p { margin: 2px 0 0; color: var(--dim); font-size: 15px; }
+  .tl li.past { opacity: .45; }
+  .tl li.now { background: var(--panel); margin: 0 -12px; padding: 14px 12px; border-left: 3px solid var(--berry); }
+  .tl li.now h3::after { content: "Now"; margin-left: 10px; font: 600 11px var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #fff; background: var(--berry); padding: 3px 7px; vertical-align: middle; }
+  .tl li.next h3::after { content: "Next"; margin-left: 10px; font: 600 11px var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-deep); padding: 2px 6px; vertical-align: middle; }
+  /* menu */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; }
+  .chip { background: none; border: 1px solid var(--line); color: var(--dim); font: 500 13px var(--sans); padding: 7px 12px; cursor: pointer; border-radius: 99px; }
+  .chip[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: #10291f; }
+  .course { margin-top: 26px; }
+  .course h3 { font-family: var(--script); font-weight: 400; font-size: 34px; color: var(--ink); margin: 0; line-height: 1.1; }
+  .course .when { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin: 2px 0 8px; }
+  .dish { padding: 10px 0; border-top: 1px solid var(--line); }
+  .dish.dim { opacity: .28; }
+  .dish p { margin: 0; font-family: var(--serif); font-size: 19px; line-height: 1.3; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .tag { font: 500 11px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); border: 1px solid var(--line); padding: 2px 7px; }
+  .note { font-size: 14px; color: var(--dim); border-left: 2px solid var(--gold-deep); padding: 2px 0 2px 12px; margin: 18px 0 0; }
+  .kids { margin-top: 14px; display: grid; gap: 10px; }
+  .kid { background: var(--panel); padding: 14px; }
+  .kid h4 { margin: 0 0 4px; font-family: var(--serif); font-size: 20px; color: var(--gold); }
+  .kid p { margin: 0; font-size: 15px; color: var(--dim); }
+  /* drinks, games */
+  .card { background: var(--panel); padding: 16px; margin-top: 12px; }
+  .card h3 { font-family: var(--serif); font-size: 22px; font-weight: 500; margin: 0; }
+  .card .when { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin: 2px 0 8px; }
+  .card p { margin: 4px 0; color: var(--dim); }
+  .card p b { color: var(--ink); font-weight: 500; }
+  details { background: var(--panel); margin-top: 10px; padding: 0 16px; }
+  summary { cursor: pointer; padding: 14px 0; font-family: var(--serif); font-size: 20px; list-style-position: outside; }
+  details p { margin: 0 0 14px; color: var(--dim); }
+  details .ans { color: var(--ok); font-weight: 500; }
+  .joke { font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1.3; margin: 0; }
+  .btn { margin-top: 12px; background: var(--gold); color: #10291f; border: 0; font: 600 13px var(--sans); letter-spacing: .12em; text-transform: uppercase; padding: 12px 16px; cursor: pointer; }
+  /* host */
+  .host-banner { background: var(--berry); color: #fff; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; padding: 8px 12px; margin-top: 16px; }
+  .host-row { display: grid; grid-template-columns: 56px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .host-row time { font-variant-numeric: tabular-nums; color: var(--gold); font-weight: 500; }
+  .host-row .c { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+  footer { text-align: center; margin-top: 40px; font-family: var(--script); font-size: 30px; color: var(--gold); }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Friday 25 December 2026</p>
+    <h1>Christmas Day</h1>
+    <p class="sub">Welcome. Here is how the day will go.</p>
+    <div class="status" aria-live="polite"><p class="big" id="sBig">&nbsp;</p><p class="small" id="sSmall">&nbsp;</p></div>
+  </header>
+
+  <nav role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="day" aria-selected="true">The day</button>
+    <button role="tab" data-tab="menu" aria-selected="false">Menu</button>
+    <button role="tab" data-tab="drinks" aria-selected="false">Drinks</button>
+    <button role="tab" data-tab="games" aria-selected="false">Games</button>
+  </nav>
+
+  <section id="day">
+    <h2>Timings</h2>
+    <p class="lede">Times are a guide. Nobody needs to watch the clock.</p>
+    <ol class="tl" id="tl"></ol>
+  </section>
+
+  <section id="menu" hidden>
+    <h2>Menu</h2>
+    <p class="lede">Tap a dietary filter to fade the dishes that contain it.</p>
+    <div class="filters" id="filters" role="group" aria-label="Hide dishes containing"></div>
+    <div id="menuBody"></div>
+    <p class="note">Tags are a guide only. Please tell James about any allergy or intolerance before you eat. Everything is made in a kitchen that uses nuts, gluten, dairy, egg, fish and shellfish.</p>
+    <h2>For the children</h2>
+    <div class="kids">
+      <div class="kid"><h4>Four-year-old</h4><p>The same food, in smaller portions: turkey breast, ballotine, potato, carrots and parsnips, gratin, two pigs in blankets, bread sauce and a little gravy. A small slice of Baked Alaska with custard.</p></div>
+      <div class="kid"><h4>Seventeen-month-old</h4><p>Small portion of turkey, potato, plain carrots and gratin, with bread sauce. Gravy and pigs in blankets are tastes only. A taste of Baked Alaska and custard.</p></div>
+    </div>
+  </section>
+
+  <section id="drinks" hidden>
+    <h2>Drinks</h2>
+    <p class="lede">A suggestion for each course. These are placeholders until the final list is chosen.</p>
+    <div class="card"><h3>On arrival</h3><p class="when">12:30</p><p><b>Champagne or English sparkling</b> with the blinis and Yorkshires.</p><p><b>Alcohol-free:</b> elderflower and cranberry spritz.</p></div>
+    <div class="card"><h3>With the starter</h3><p class="when">14:00</p><p><b>Crisp white</b> such as Chablis or Albariño, for the salmon and crab.</p><p><b>Alcohol-free:</b> sparkling water with lemon and dill.</p></div>
+    <div class="card"><h3>With the turkey</h3><p class="when">Main</p><p><b>Pinot Noir</b> or a light red from Beaujolais. A rich white Burgundy also suits the smoke.</p><p><b>Alcohol-free:</b> spiced apple and pomegranate.</p></div>
+    <div class="card"><h3>With dessert</h3><p class="when">Alaska and pudding</p><p><b>Moscatel or a Tawny port.</b></p><p><b>Alcohol-free:</b> hot ginger and clementine.</p></div>
+    <div class="card"><h3>Later on</h3><p class="when">About 19:00</p><p><b>Ruby port or a red from the Rhône</b> with the cheese and gammon.</p><p><b>Alcohol-free:</b> tea, coffee and a good cider.</p></div>
+  </section>
+
+  <section id="games" hidden>
+    <h2>Cracker joke</h2>
+    <div class="card"><p class="joke" id="joke"></p><button class="btn" id="jokeBtn" type="button">Another one</button></div>
+
+    <h2>Christmas quiz</h2>
+    <p class="lede">Hosted by Auntie Sue. Answers are hidden until you tap, so no peeking while she reads the questions.</p>
+    <div id="quiz"></div>
+
+    <h2>Table jobs</h2>
+    <div class="card"><p><b>Carver:</b> the host.</p><p><b>Toastmaster:</b> the youngest adult.</p><p><b>Flame watcher:</b> everyone, when the Baked Alaska comes out.</p></div>
+  </section>
+
+  <section id="host" hidden>
+    <div class="host-banner">Host view: kitchen run sheet</div>
+    <h2>Christmas Day, minute by minute</h2>
+    <div id="hostBody"></div>
+    <h2>Probe targets</h2>
+    <div class="card"><p>Crowns off at 155°F, rest, carve. Ballotine 167°F at 40 minutes. Red cabbage 167°F. Gravy at the boil. Gammon 167°F. Times are guides; cook to temperature.</p></div>
+  </section>
+
+  <footer>Merry Christmas</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var DAY = "2026-12-25";
+  var MENU = [
+    { name: "Canapés", when: "12:30", dishes: [
+      ["Blinis, crème fraîche, trout roe and dill", ["gluten", "dairy", "egg", "fish"]],
+      ["Mini Yorkshire puddings, rare beef fillet, horseradish cream and watercress", ["gluten", "dairy", "egg"]],
+      ["Parmesan and black pepper sablés", ["gluten", "dairy", "egg"]],
+      ["Posh crisps", []] ]},
+    { name: "To Start", when: "14:00", dishes: [
+      ["Smoked salmon, brown crab and leek terrine, pickled cucumber, dill oil, lemon and rye crisps", ["fish", "shellfish", "dairy", "egg", "gluten"]] ]},
+    { name: "The Main Event", when: "Served family style", dishes: [
+      ["Fruitwood-smoked rotisserie turkey crowns, dry-brined", []],
+      ["Turkey thigh ballotine, pork, chestnut, sage and turkey liver stuffing, smoked streaky, crisp sage", ["gluten", "pork", "nuts"]],
+      ["1,000-layer potatoes", ["dairy"]],
+      ["Pigs in blankets: homemade sage and mace chipolatas, smoked streaky, hot honey and mustard glaze", ["pork", "gluten"]],
+      ["Warm shaved sprouts, brown butter, pancetta, chestnut, lemon and apple", ["pork", "nuts", "dairy"]],
+      ["Miso and maple carrots and parsnips, crème fraîche, toasted seed dukkah", ["dairy", "sesame", "soya"]],
+      ["Red cabbage braised with port, orange and star anise", []],
+      ["Cauliflower and kale gratin, Montgomery cheddar and Gruyère", ["dairy", "gluten"]],
+      ["Smoked turkey gravy, bread sauce, port and orange cranberry sauce", ["dairy", "gluten"]] ]},
+    { name: "To Finish", when: "Dessert", dishes: [
+      ["Layered Baked Alaska: gingerbread, clementine sorbet, vanilla and Christmas spice ice cream with mincemeat, Italian meringue, flamed at the table", ["gluten", "dairy", "egg", "nuts"]],
+      ["Christmas pudding, brandy butter and proper custard", ["gluten", "dairy", "egg", "nuts"]] ]},
+    { name: "Later On", when: "About 19:00", dishes: [
+      ["Warm glazed gammon, English mustard, Demerara and clove", ["pork"]],
+      ["British cheeseboard, pork pie and spiced pear and date chutney", ["dairy", "gluten", "pork"]],
+      ["Pork, apple and fennel seed sausage rolls", ["pork", "gluten", "dairy", "egg"]] ]}
+  ];
+  var ALLERGENS = ["gluten", "dairy", "egg", "fish", "shellfish", "nuts", "pork", "sesame", "soya"];
+
+  // Guest-facing timeline: [time, title, note]
+  var TL = [
+    ["12:30", "Guests arrive", "Fizz, canapés, sablés and crisps."],
+    ["14:00", "Starter", "Smoked salmon and crab terrine at the table."],
+    ["14:40", "Turkey, carved", "Family-style main with all the trimmings."],
+    ["16:00", "Dessert", "Flaming Baked Alaska, then Christmas pudding. Time approximate."],
+    ["17:30", "Rest and play", "Games, a walk, presents. The gammon goes in the oven."],
+    ["19:00", "Evening spread", "Gammon, cheese, pork pie and sausage rolls."]
+  ];
+  var HOST = [
+    ["10:30", "main", "Light the Weber (spit on about 30 minutes later)"], ["11:30", "canapé", "Blinis out of the freezer"],
+    ["11:45", "canapé", "Slice the beef"], ["12:00", "canapé", "Warm blinis and Yorkshires in the air fryer"],
+    ["12:15", "canapé", "Assemble the canapés"], ["12:30", "canapé", "Guests arrive; canapés, sablés and crisps out"],
+    ["12:45", "sides", "Red cabbage to 167°F on the hob, then into the slow cooker"], ["13:00", "starter", "Slice and plate the terrine; back into the fridge"],
+    ["13:30", "main", "Warm the gravy base; cut the apple for the sprouts; cranberry sauce out"], ["13:45", "main", "Crowns off at 155°F to rest (about now)"],
+    ["13:58", "starter", "Dill oil and dill on the starter plates"], ["14:00", "starter", "Starter on the table"],
+    ["14:30", "main", "Carve the crowns"], ["14:40", "sides", "Sprouts, bread sauce and gravy finished; main on the table (about now)"],
+    ["Dessert", "dessert", "Torch and flame the Alaskas; microwave the pudding and custard"], ["17:30", "evening", "Gammon into the oven"],
+    ["18:20", "evening", "Sausage rolls in from frozen"], ["19:00", "evening", "Evening spread: gammon, cheeses, pork pie, chutney, sausage rolls"]
+  ];
+  var JOKES = ["What do you call a snowman with a six-pack? An abdominal snowman.", "Why did nobody bring the turkey a present? It already had enough stuffing.",
+    "What do elves learn at school? The elf-abet.", "What is a sprout's favourite music? Brussels rap.", "Why was the Christmas pudding so calm? It had been well soaked.",
+    "What do you get if you cross a turkey with a ghost? A poultry-geist."];
+  var QUIZ = [["Which country started the tradition of the Christmas tree?", "Germany."], ["In the song, how many gifts arrive in total across the twelve days?", "364."],
+    ["What are the names of Santa's lead reindeer, the first two on most lists?", "Dasher and Dancer."], ["Which Dickens character says 'Bah, humbug'?", "Ebenezer Scrooge."],
+    ["In which decade was the first Christmas card sent in Britain?", "The 1840s (1843)."], ["Which vegetable divides Christmas dinner tables the most?", "The Brussels sprout, naturally."]];
+
+  function $(id) { return document.getElementById(id); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  var sim = new URLSearchParams(location.search).get("sim");
+  function now() { return sim ? new Date(sim) : new Date(); }
+  function mins(t) { var p = t.split(":"); return +p[0] * 60 + +p[1]; }
+  function dayOf(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+
+  // Timeline + status
+  function renderDay() {
+    var n = now(), isDay = dayOf(n) === DAY, cur = n.getHours() * 60 + n.getMinutes();
+    var ci = -1;
+    if (isDay) TL.forEach(function (r, i) { if (mins(r[0]) <= cur) ci = i; });
+    $("tl").innerHTML = TL.map(function (r, i) {
+      var cls = !isDay ? "" : i < ci ? "past" : i === ci ? "now" : i === ci + 1 ? "next" : "";
+      return '<li class="' + cls + '"><time>' + r[0] + '</time><div><h3>' + r[1] + '</h3><p>' + r[2] + '</p></div></li>';
+    }).join("");
+    var big = $("sBig"), small = $("sSmall");
+    if (!isDay) {
+      var target = new Date(DAY + "T14:00:00"), diff = target - n;
+      if (diff > 0) {
+        var d = Math.floor(diff / 864e5), h = Math.floor(diff % 864e5 / 36e5), m = Math.floor(diff % 36e5 / 6e4);
+        big.innerHTML = '<span class="digits">' + d + '</span> days <span class="digits">' + h + '</span> hours to the starter';
+        small.textContent = "Starter on the table at 14:00 on Christmas Day.";
+      } else { big.textContent = "Christmas Day 2026 has been and gone"; small.textContent = "Thank you for coming."; }
+    } else if (ci < 0) { big.textContent = "Today is the day"; small.textContent = "Guests arrive at 12:30."; }
+    else {
+      big.textContent = TL[ci][1]; var nx = TL[ci + 1];
+      small.textContent = nx ? "Next: " + nx[1] + " at " + nx[0] : "That is the last of it. Enjoy the evening.";
+    }
+    if (isDay && ci >= 0 && !renderDay.done) { renderDay.done = 1; var el = document.querySelector("#tl li.now"); if (el) el.scrollIntoView({ block: "center" }); }
+  }
+
+  // Menu
+  var hidden = {};
+  function renderMenu() {
+    $("menuBody").innerHTML = MENU.map(function (c) {
+      return '<div class="course"><h3>' + c.name + '</h3><p class="when">' + c.when + '</p>' + c.dishes.map(function (d) {
+        var dim = d[1].some(function (a) { return hidden[a]; });
+        return '<div class="dish' + (dim ? " dim" : "") + '"><p>' + d[0] + '</p>' +
+          (d[1].length ? '<div class="tags">' + d[1].map(function (t) { return '<span class="tag">' + t + '</span>'; }).join("") + '</div>' : "") + '</div>';
+      }).join("") + '</div>';
+    }).join("");
+  }
+  $("filters").innerHTML = ALLERGENS.map(function (a) { return '<button class="chip" type="button" aria-pressed="false" data-a="' + a + '">No ' + a + '</button>'; }).join("");
+  $("filters").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    var a = b.dataset.a; hidden[a] = !hidden[a]; b.setAttribute("aria-pressed", hidden[a]); renderMenu();
+  });
+
+  // Games
+  var ji = Math.floor(Math.random() * JOKES.length);
+  function joke() { $("joke").textContent = JOKES[ji % JOKES.length]; }
+  $("jokeBtn").addEventListener("click", function () { ji++; joke(); });
+  $("quiz").innerHTML = QUIZ.map(function (q, i) { return '<details><summary>' + (i + 1) + '. ' + q[0] + '</summary><p class="ans">' + q[1] + '</p></details>'; }).join("");
+
+  // Host
+  $("hostBody").innerHTML = HOST.map(function (r) { return '<div class="host-row"><time>' + r[0] + '</time><div>' + r[2] + '<div class="c">' + r[1] + '</div></div></div>'; }).join("");
+
+  // Tabs
+  var tabs = ["day", "menu", "drinks", "games", "host"];
+  function show(t) {
+    if (tabs.indexOf(t) < 0) t = "day";
+    tabs.forEach(function (id) { $(id).hidden = id !== t; });
+    document.querySelectorAll("nav button").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.tab === t); });
+  }
+  document.querySelector("nav").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return; show(b.dataset.tab); history.replaceState(null, "", "#" + b.dataset.tab); window.scrollTo(0, 0);
+  });
+  window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
+
+  renderDay(); renderMenu(); joke(); show(location.hash.slice(1));
+  setInterval(renderDay, 30000);
+})();
+</script>
+</body>
+</html>
